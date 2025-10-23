@@ -10,7 +10,8 @@
 
 .ReactCrop__image {
   display: block;
-  max-width: 100%; }
+  max-width: 100%;
+  max-height: calc(100vh - 300px); }
 
 .ReactCrop__image-copy {
   position: absolute;

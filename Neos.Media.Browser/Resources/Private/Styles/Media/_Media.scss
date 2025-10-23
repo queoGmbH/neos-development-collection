@@ -119,7 +119,7 @@
 
 							&:hover {
 								background-color: $blue;
-								
+
 								.neos-media-assetsource-icon {
 									filter: none;
 								}
@@ -1076,5 +1076,9 @@
 		border: 1px solid #ddd;
 		border-bottom-color: transparent;
 		cursor: default;
+	}
+
+	#variants-app .neos-modal-body {
+		text-align: center;
 	}
 }
