@@ -1,0 +1,13 @@
+# Include Neos Fusion base prototypes
+include: resource://Neos.Fusion/Private/Fusion/Root.fusion
+
+# Include our custom templates
+include: Index.fusion
+include: WorkspaceStatisticsCard.fusion
+include: ContentRepositoryStatusCard.fusion
+
+# This is the entry point that the controller will render
+index = Neos.Neos:Module.Administration.SystemHealth.Index
+
+# This is used for htmx partial updates
+refresh = Neos.Neos:Module.Administration.SystemHealth.Refresh

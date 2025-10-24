@@ -1,0 +1,217 @@
+/* Progress bar styling for workspace statistics */
+.progress-bar-container {
+    width: 100%;
+    max-width: 300px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 24px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #3a3a3a;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00adee 0%, #0084bb 100%);
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+
+.progress-bar-fill.live {
+    background: linear-gradient(90deg, #26a44b 0%, #1e8039 100%);
+}
+
+.refresh-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #26a44b;
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+}
+
+.refresh-indicator-disabled {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #c62828;
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse-red 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes pulse-red {
+    0%, 100% {
+        opacity: 1;
+        background: #c62828;
+    }
+    50% {
+        opacity: 0.5;
+        background: #d32f2f;
+    }
+}
+
+/* Manual refresh button styling */
+.system-health-refresh-button {
+    padding: 4px 10px !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+    min-height: auto !important;
+    height: auto !important;
+    border-radius: 3px !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.system-health-refresh-button:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.system-health-refresh-button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.system-health-refresh-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.system-health-refresh-button i {
+    margin: 0;
+    font-size: 12px;
+}
+
+/* Layout */
+.system-health-section {
+    margin-bottom: 20px;
+}
+
+.system-health-view {
+    margin-bottom: 40px;
+}
+
+.system-health-view h2 {
+    margin-bottom: 15px;
+}
+
+.system-health-card-content {
+    padding-left: 20px;
+}
+
+/* Content Repository Selector */
+.system-health-selector-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.system-health-selector-label {
+    font-weight: bold;
+    margin: 0;
+}
+
+#content-repository-selector {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    border: 1px solid #555;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#content-repository-selector:hover {
+    border-color: #00adee;
+    background-color: #424242;
+}
+
+#content-repository-selector:focus {
+    outline: none;
+    border-color: #00adee;
+    box-shadow: 0 0 0 2px rgba(0, 173, 238, 0.2);
+}
+
+#content-repository-selector option {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    padding: 8px;
+}
+
+/* Sites info */
+.system-health-sites-info {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.system-health-sites-list {
+    margin: 5px 0 !important;
+    padding-left: 25px !important;
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+}
+
+.system-health-sites-list > li {
+    display: list-item !important;
+    margin-bottom: 4px !important;
+}
+
+.system-health-primary-domain-link {
+    color: #666 !important;
+    text-decoration: underline !important;
+    transition: color 0.2s ease;
+}
+
+.system-health-primary-domain-link:hover {
+    color: #00b5ff !important;
+}
+
+/* Refresh info */
+.system-health-refresh-info {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.system-health-refresh-status {
+    flex: 1;
+}
+
+/* htmx indicator support */
+.system-health-refresh-button.htmx-request i.fa-sync-alt {
+    animation: fa-spin 1s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

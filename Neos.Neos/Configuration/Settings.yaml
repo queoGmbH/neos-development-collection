@@ -385,6 +385,12 @@ Neos:
             description: 'Neos.Neos:Modules:dimensions.description'
             icon: fas fa-code-branch
             mainStylesheet: 'Lite'
+          systemhealth:
+            label: 'Neos.Neos:Modules:systemhealth.label'
+            controller: 'Neos\Neos\Controller\Module\Administration\SystemHealthController'
+            description: 'Neos.Neos:Modules:systemhealth.description'
+            icon: fas fa-heartbeat
+            mainStylesheet: 'Lite'
       user:
         label: 'Neos.Neos:Modules:user.label'
         controller: \Neos\Neos\Controller\Module\UserController
@@ -399,6 +405,18 @@ Neos:
             description: 'Neos.Neos:Modules:userSettings.description'
             icon: fas fa-user
             mainStylesheet: 'Lite'
+
+    # System Health Module Configuration
+    systemHealth:
+      views:
+        Neos\Neos\Domain\Service\SystemHealth\WorkspaceStatisticsView:
+          enabled: true
+          refreshInterval: 300
+          position: 0
+        Neos\Neos\Domain\Service\SystemHealth\ContentRepositoryStatusView:
+          enabled: true
+          refreshInterval: 0
+          position: 'after WorkspaceStatisticsView'
 
     transliterationRules:
       da:

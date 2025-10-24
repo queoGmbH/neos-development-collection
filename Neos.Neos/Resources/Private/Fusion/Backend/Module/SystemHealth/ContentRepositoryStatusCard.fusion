@@ -1,0 +1,110 @@
+// Card component for Content Repository Status view
+prototype(Neos.Neos:Module.Administration.SystemHealth.ContentRepositoryStatusCard) < prototype(Neos.Fusion:Component) {
+    data = ${[]}
+
+    renderer = afx`
+        <h2>
+            <i class="fas fa-database" style="margin-right: 10px;"></i>
+            Content Repository Status
+        </h2>
+
+        <div class="system-health-card-content">
+            <h3 style="margin-top: 20px; margin-bottom: 10px;">Event Store</h3>
+            <table class="neos-table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Position</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <Neos.Neos:Module.Administration.SystemHealth.StatusBadge status={props.data.eventStore.status} />
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <span class="neos-badge">{props.data.eventStore.position}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 30px; margin-bottom: 10px;">Subscriptions</h3>
+            <table class="neos-table" id="cr-subscriptions-table">
+                <thead>
+                    <tr>
+                        <th>Subscription</th>
+                        <th>Setup</th>
+                        <th>Status</th>
+                        <th>Position</th>
+                    </tr>
+                </thead>
+                <tbody id="cr-subscriptions-body">
+                    <Neos.Fusion:Loop items={props.data.subscriptions}>
+                        <Neos.Neos:Module.Administration.SystemHealth.SubscriptionRow
+                            id={item.id}
+                            setupStatus={item.setupStatus}
+                            subscriptionStatus={item.subscriptionStatus}
+                            position={item.position}
+                            isBehind={item.isBehind}
+                            error={item.error}
+                        />
+                    </Neos.Fusion:Loop>
+                </tbody>
+            </table>
+        </div>
+    `
+}
+
+// Helper component for status badges
+prototype(Neos.Neos:Module.Administration.SystemHealth.StatusBadge) < prototype(Neos.Fusion:Component) {
+    status = 'OK'
+
+    # Green for OK and ACTIVE, red for ERROR, yellow for everything else
+    badgeClass = ${this.status == 'OK' || this.status == 'ACTIVE' ? 'neos-badge-success' : (this.status == 'ERROR' ? 'neos-badge-important' : 'neos-badge-warning')}
+
+    renderer = afx`
+        <span class={'neos-badge ' + props.badgeClass}>{props.status}</span>
+    `
+}
+
+// Row component for subscription display
+prototype(Neos.Neos:Module.Administration.SystemHealth.SubscriptionRow) < prototype(Neos.Fusion:Component) {
+    id = ''
+    setupStatus = 'OK'
+    subscriptionStatus = 'ACTIVE'
+    position = 0
+    isBehind = false
+    error = null
+
+    renderer = afx`
+        <tr data-subscription={props.id}>
+            <td style="vertical-align: middle;">
+                <span class="neos-label">{props.id}</span>
+            </td>
+            <td style="vertical-align: middle;">
+                <Neos.Neos:Module.Administration.SystemHealth.StatusBadge status={props.setupStatus} />
+            </td>
+            <td style="vertical-align: middle;">
+                <Neos.Neos:Module.Administration.SystemHealth.StatusBadge status={props.subscriptionStatus} />
+            </td>
+            <td style="vertical-align: middle;">
+                <span class={props.isBehind ? 'neos-badge neos-badge-important' : 'neos-badge'}>{props.position}</span>
+            </td>
+        </tr>
+        <Neos.Neos:Module.Administration.SystemHealth.ErrorRow error={props.error} @if.hasError={props.error} />
+    `
+}
+
+// Error row component
+prototype(Neos.Neos:Module.Administration.SystemHealth.ErrorRow) < prototype(Neos.Fusion:Component) {
+    error = null
+
+    renderer = afx`
+        <tr>
+            <td colspan="4" style="background: #ffebee; padding: 10px; color: #c62828;">
+                <strong>Error:</strong> {props.error}
+            </td>
+        </tr>
+    `
+}

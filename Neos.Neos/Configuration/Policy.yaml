@@ -71,6 +71,10 @@ privilegeTargets:
       label: General access to data sources
       matcher: 'method(Neos\Neos\Service\Controller\DataSourceController->(index|error)Action())'
 
+    'Neos.Neos:Backend.Module.Administration.SystemHealth.Actions':
+      label: Access to system health module actions
+      matcher: 'method(Neos\Neos\Controller\Module\Administration\SystemHealthController->(index|stats)Action())'
+
     'Neos.Neos:Impersonate':
       label: Impersonate user
       matcher: 'method(Neos\Neos\Controller\Backend\ImpersonateController->(?!initialize).*Action())'
@@ -120,6 +124,10 @@ privilegeTargets:
     'Neos.Neos:Backend.Module.Administration.Dimensions':
       label: General access to the dimensions module
       matcher: 'administration/dimensions'
+
+    'Neos.Neos:Backend.Module.Administration.SystemHealth':
+      label: General access to the system health module
+      matcher: 'administration/systemhealth'
 
 
   'Neos\Neos\Security\Authorization\Privilege\ReadNodePrivilege':
@@ -257,6 +265,14 @@ roles:
 
       -
         privilegeTarget: 'Neos.Neos:Backend.Module.Administration.Dimensions'
+        permission: GRANT
+
+      -
+        privilegeTarget: 'Neos.Neos:Backend.Module.Administration.SystemHealth'
+        permission: GRANT
+
+      -
+        privilegeTarget: 'Neos.Neos:Backend.Module.Administration.SystemHealth.Actions'
         permission: GRANT
 
       - privilegeTarget: 'Neos.Neos:Impersonate'

@@ -496,6 +496,83 @@ Klicken Sie auf einen der Knoten um nur die Fallbacks und Varianten für diesen 
         <source>The intra dimensional fallback graph displays fallbacks within each content dimension.</source>
         <target state="final">Das intradimensionale Fallback-Diagramm zeigt Fallbacks innerhalb jeder Inhaltsdimension an.</target>
       </trans-unit>
+      <!-- System Health -->
+      <trans-unit id="systemhealth.label" xml:space="preserve" approved="yes">
+        <source>System Health</source>
+        <target state="final">System Gesundheit</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.description" xml:space="preserve" approved="yes">
+        <source>Monitor your Neos system health, including workspace statistics, node counts, and system metrics.</source>
+        <target state="final">Überwachen Sie die Gesundheit Ihres Neos-Systems, einschließlich Workspace-Statistiken, Knoten-Anzahlen und System-Metriken.</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.action.index" xml:space="preserve" approved="yes">
+        <source>Dashboard</source>
+        <target state="final">Dashboard</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.workspaceStatistics" xml:space="preserve" approved="yes">
+        <source>Workspace Statistics</source>
+        <target state="final">Workspace-Statistiken</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.workspaceName" xml:space="preserve" approved="yes">
+        <source>Workspace</source>
+        <target state="final">Workspace</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.nodeCount" xml:space="preserve" approved="yes">
+        <source>Node Count</source>
+        <target state="final">Knoten-Anzahl</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.totalUnpublishedNodes" xml:space="preserve" approved="yes">
+        <source>Total unpublished Nodes</source>
+        <target state="final">Unveröffentlichte Knoten gesamt</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.shareOfChanges" xml:space="preserve" approved="yes">
+        <source>Share of Changes</source>
+        <target state="final">Anteil der Änderungen</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.lastUpdated" xml:space="preserve" approved="yes">
+        <source>Last updated</source>
+        <target state="final">Zuletzt aktualisiert</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.autoRefresh" xml:space="preserve" approved="yes">
+        <source>Auto-refresh enabled</source>
+        <target state="final">Automatische Aktualisierung</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.autoRefreshDisabled" xml:space="preserve" approved="yes">
+        <source>Auto-refresh enabled</source>
+        <target state="final">Keine automatische Aktualisierung</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.manualRefresh" xml:space="preserve" approved="yes">
+        <source>Refresh now</source>
+        <target state="final">Jetzt aktualisieren</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.noUnpublishedChanges" xml:space="preserve" approved="yes">
+        <source>No unpublished changes found. All workspaces are clean.</source>
+        <target state="final">Keine unveröffentlichten Änderungen gefunden. Alle Workspaces sind sauber.</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.outdatedWorkspaces" xml:space="preserve" approved="yes">
+        <source>Outdated Workspaces (without changes)</source>
+        <target state="final">Veraltete Arbeitsbereiche (ohne Änderungen)</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.status" xml:space="preserve" approved="yes">
+        <source>Status</source>
+        <target state="final">Status</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.outdated" xml:space="preserve" approved="yes">
+        <source>Outdated</source>
+        <target state="final">Veraltet</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.contentRepository" xml:space="preserve" approved="yes">
+        <source>Content Repository</source>
+        <target state="final">Content Repository</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.onlyOneContentRepository" xml:space="preserve" approved="yes">
+        <source>Only one content repository available - no selection possible</source>
+        <target state="final">Nur ein Content Repository verfügbar - keine Auswahl möglich</target>
+      </trans-unit>
+      <trans-unit id="systemhealth.sitesForThisRepository" xml:space="preserve" approved="yes">
+        <source>Sites for this content repository</source>
+        <target state="final">Sites für dieses Content Repository</target>
+      </trans-unit>
       <!-- User -->
       <trans-unit id="user.label" xml:space="preserve" approved="yes">
         <source>User</source>

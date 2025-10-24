@@ -1,0 +1,117 @@
+// Card component for Workspace Statistics view
+prototype(Neos.Neos:Module.Administration.SystemHealth.WorkspaceStatisticsCard) < prototype(Neos.Fusion:Component) {
+    data = ${[]}
+
+    renderer = afx`
+        <h2>
+            <i class="fas fa-heartbeat" style="margin-right: 10px;"></i>
+            {I18n.translate('Neos.Neos:Modules:systemhealth.workspaceStatistics')}
+        </h2>
+
+        <div class="system-health-card-content">
+            <p class="workspace-stats-total" style={'margin-bottom: 20px; color: #aaa;' + (props.data.totalNodes > 0 ? '' : ' display: none;')}>
+                {I18n.translate('Neos.Neos:Modules:systemhealth.totalUnpublishedNodes')}:
+                <strong id="total-nodes-count" style="color: #00adee; font-size: 16px; margin-left: 5px;">{props.data.totalNodes}</strong>
+            </p>
+
+            <table class="neos-table workspace-stats-table" style={props.data.totalNodes > 0 ? '' : 'display: none;'}>
+            <thead>
+                <tr>
+                    <th>{I18n.translate('Neos.Neos:Modules:systemhealth.workspaceName')}</th>
+                    <th>{I18n.translate('Neos.Neos:Modules:systemhealth.nodeCount')}</th>
+                    <th>{I18n.translate('Neos.Neos:Modules:systemhealth.shareOfChanges')}</th>
+                </tr>
+            </thead>
+            <tbody id="workspace-stats-body">
+                <Neos.Fusion:Loop items={props.data.workspaceStatistics}>
+                    <Neos.Neos:Module.Administration.SystemHealth.WorkspaceRow
+                        workspaceName={item.workspaceName}
+                        nodeCount={item.nodeCount}
+                        percentage={item.percentage}
+                    />
+                </Neos.Fusion:Loop>
+            </tbody>
+        </table>
+
+        <div class="neos-alert neos-alert-success workspace-stats-no-changes" style={'margin-top: 20px;' + (props.data.totalNodes == 0 ? '' : ' display: none;')}>
+            <i class="fas fa-check-circle" style="color: #4caf50; margin-right: 10px;"></i>
+            {I18n.translate('Neos.Neos:Modules:systemhealth.noUnpublishedChanges')}
+        </div>
+
+        <h3 class="workspace-stats-outdated-header" style={'margin-top: 30px; margin-bottom: 10px;' + (props.data.outdatedWorkspaces && Array.length(props.data.outdatedWorkspaces) > 0 ? '' : ' display: none;')}>
+            <i class="fas fa-exclamation-triangle" style="color: #ff9800; margin-right: 10px;"></i>
+            {I18n.translate('Neos.Neos:Modules:systemhealth.outdatedWorkspaces')}
+        </h3>
+
+            <table class="neos-table workspace-stats-outdated-table" style={props.data.outdatedWorkspaces && Array.length(props.data.outdatedWorkspaces) > 0 ? '' : 'display: none;'}>
+                <thead>
+                    <tr>
+                        <th>{I18n.translate('Neos.Neos:Modules:systemhealth.workspaceName')}</th>
+                        <th>{I18n.translate('Neos.Neos:Modules:systemhealth.status')}</th>
+                    </tr>
+                </thead>
+                <tbody id="workspace-stats-outdated-body">
+                    <Neos.Fusion:Loop items={props.data.outdatedWorkspaces}>
+                        <Neos.Neos:Module.Administration.SystemHealth.OutdatedWorkspaceRow
+                            workspaceName={item.workspaceName}
+                        />
+                    </Neos.Fusion:Loop>
+                </tbody>
+            </table>
+        </div>
+    `
+}
+
+prototype(Neos.Neos:Module.Administration.SystemHealth.WorkspaceRow) < prototype(Neos.Fusion:Component) {
+    workspaceName = ''
+    nodeCount = 0
+    percentage = 0
+
+    isLive = ${this.workspaceName == 'live'}
+
+    renderer = afx`
+        <tr data-workspace={props.workspaceName}>
+            <td style="vertical-align: middle;">
+                <span class={props.isLive ? 'neos-label neos-label-success' : 'neos-label'}>
+                    {props.workspaceName}
+                </span>
+            </td>
+            <td style="vertical-align: middle;">
+                <span class="neos-badge neos-badge-info">{props.nodeCount}</span>
+            </td>
+            <td style="vertical-align: middle;">
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div
+                            class={'progress-bar-fill' + (props.isLive ? ' live' : '')}
+                            style={'width: ' + props.percentage + '%'}
+                            data-percentage={props.percentage}
+                        >
+                            {props.percentage}%
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    `
+}
+
+prototype(Neos.Neos:Module.Administration.SystemHealth.OutdatedWorkspaceRow) < prototype(Neos.Fusion:Component) {
+    workspaceName = ''
+
+    renderer = afx`
+        <tr data-workspace={props.workspaceName}>
+            <td style="vertical-align: middle;">
+                <span class="neos-label">
+                    {props.workspaceName}
+                </span>
+            </td>
+            <td style="vertical-align: middle;">
+                <span class="neos-badge neos-badge-warning">
+                    <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>
+                    {I18n.translate('Neos.Neos:Modules:systemhealth.outdated')}
+                </span>
+            </td>
+        </tr>
+    `
+}

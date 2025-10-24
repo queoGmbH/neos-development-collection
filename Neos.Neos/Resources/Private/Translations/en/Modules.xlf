@@ -400,6 +400,65 @@ Click on one of the nodes to only see its fallbacks and variants. Click again to
 				<source>The intra dimensional fallback graph displays fallbacks within each content dimension.</source>
 			</trans-unit>
 
+			<!-- System Health -->
+			<trans-unit id="systemhealth.label" xml:space="preserve">
+				<source>System Health</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.description" xml:space="preserve">
+				<source>Monitor your Neos system health, including workspace statistics, node counts, and system metrics.</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.action.index" xml:space="preserve">
+				<source>Dashboard</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.workspaceStatistics" xml:space="preserve">
+				<source>Workspace Statistics</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.workspaceName" xml:space="preserve">
+				<source>Workspace</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.nodeCount" xml:space="preserve">
+				<source>Node Count</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.shareOfChanges" xml:space="preserve">
+				<source>Share of Changes</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.totalUnpublishedNodes" xml:space="preserve">
+				<source>Total unpublished Nodes</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.lastUpdated" xml:space="preserve">
+				<source>Last updated</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.autoRefresh" xml:space="preserve">
+				<source>Auto-refresh</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.autoRefreshDisabled" xml:space="preserve">
+				<source>Auto-refresh inactive</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.manualRefresh" xml:space="preserve">
+				<source>Refresh now</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.noUnpublishedChanges" xml:space="preserve">
+				<source>No unpublished changes found. All workspaces are clean.</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.outdatedWorkspaces" xml:space="preserve">
+				<source>Outdated Workspaces (without changes)</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.status" xml:space="preserve">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.outdated" xml:space="preserve">
+				<source>Outdated</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.contentRepository" xml:space="preserve">
+				<source>Content Repository</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.onlyOneContentRepository" xml:space="preserve">
+				<source>Only one content repository available - no selection possible</source>
+			</trans-unit>
+			<trans-unit id="systemhealth.sitesForThisRepository" xml:space="preserve">
+				<source>Sites for this content repository</source>
+			</trans-unit>
+
 			<!-- User -->
 			<trans-unit id="user.label" xml:space="preserve">
 				<source>User</source>

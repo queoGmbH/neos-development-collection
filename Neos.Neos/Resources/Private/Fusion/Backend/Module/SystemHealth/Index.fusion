@@ -1,0 +1,179 @@
+prototype(Neos.Neos:Module.Administration.SystemHealth.Index) < prototype(Neos.Fusion:Component) {
+    views = ${views}
+    contentRepositories = ${contentRepositories}
+    selectedContentRepositoryId = ${selectedContentRepositoryId}
+    sitesForCurrentCR = ${sitesForCurrentCR}
+
+    renderer = afx`
+        <div class="system-health-dashboard">
+            <link rel="stylesheet" href={StaticResource.uri('Neos.Neos', 'Public/Styles/Module/SystemHealth.css')} />
+            <script src={StaticResource.uri('Neos.Workspace.Ui', 'Public/Scripts/htmx.min.js')}></script>
+
+            <div class="neos-content neos-indented system-health-section">
+                <Neos.Neos:Module.Administration.SystemHealth.ContentRepositorySelector
+                    contentRepositories={props.contentRepositories}
+                    selectedContentRepositoryId={props.selectedContentRepositoryId}
+                    sitesForCurrentCR={props.sitesForCurrentCR}
+                />
+            </div>
+
+            <Neos.Fusion:Loop items={props.views}>
+                <div class="system-health-view" data-view-id={item.identifier}>
+                    <div class="neos-content neos-indented">
+                        <Neos.Neos:Module.Administration.SystemHealth.ViewContainer
+                            viewIdentifier={item.identifier}
+                            prototypeName={item.prototypeName}
+                            data={item.data}
+                            refreshInterval={item.refreshInterval}
+                            contentRepositoryId={props.selectedContentRepositoryId}
+                        />
+                    </div>
+                </div>
+            </Neos.Fusion:Loop>
+
+            <script src={StaticResource.uri('Neos.Neos', 'Public/JavaScript/Module/SystemHealth.js')}></script>
+        </div>
+    `
+}
+
+prototype(Neos.Neos:Module.Administration.SystemHealth.Refresh) < prototype(Neos.Fusion:Component) {
+    views = ${views}
+    firstView = ${Array.first(this.views)}
+
+    @context.requestedIdentifier = ${request.httpRequest.queryParams.viewIdentifier}
+    @context.contentRepositoryId = ${request.httpRequest.queryParams.contentRepository}
+
+    renderer = afx`
+      <div id={'system-health-content-' + requestedIdentifier} @if.hasView={props.firstView}>
+        <Neos.Fusion:Renderer
+            type={props.firstView.prototypeName}
+            element.data={props.firstView.data}
+        />
+        <Neos.Neos:Module.Administration.SystemHealth.RefreshBadge
+            refreshInterval={props.firstView.refreshInterval}
+            viewIdentifier={props.firstView.identifier}
+            contentRepositoryId={contentRepositoryId}
+            timestamp={props.firstView.data.timestamp}
+        />
+      </div>
+    `
+}
+
+prototype(Neos.Neos:Module.Administration.SystemHealth.ContentRepositorySelector) < prototype(Neos.Fusion:Component) {
+    contentRepositories = ${[]}
+    selectedContentRepositoryId = ''
+    sitesForCurrentCR = ${[]}
+    hasOnlyOneRepository = ${Array.length(this.contentRepositories) == 1}
+
+    renderer = afx`
+      <div class="system-health-selector">
+        <div class="system-health-selector-row">
+          <label for="content-repository-selector" class="system-health-selector-label">
+            {I18n.translate('Neos.Neos:Modules:systemhealth.contentRepository')}:
+          </label>
+          <select
+              id="content-repository-selector"
+              class="neos-select"
+              disabled={props.hasOnlyOneRepository}
+              title={props.hasOnlyOneRepository ? I18n.translate('Neos.Neos:Modules:systemhealth.onlyOneContentRepository') : ''}
+              onchange="SystemHealthViews.changeContentRepository(this.value)">
+            <Neos.Fusion:Loop items={props.contentRepositories}>
+              <option value={item.id} selected={item.selected}>{item.label}</option>
+            </Neos.Fusion:Loop>
+          </select>
+        </div>
+
+        <div class="system-health-sites-info" @if.hasSites={props.sitesForCurrentCR && Array.length(props.sitesForCurrentCR) > 0}>
+          <strong>{I18n.translate('Neos.Neos:Modules:systemhealth.sitesForThisRepository')}:</strong>
+          <ul class="system-health-sites-list">
+            <Neos.Fusion:Loop items={props.sitesForCurrentCR}>
+              <li>
+                {item.name}
+                <span @if.hasPrimaryDomain={item.primaryDomainUrl}>
+                                {' ('}
+                  <a href={item.primaryDomainUrl} target="_blank" rel="noopener noreferrer" class="system-health-primary-domain-link">
+                                    {item.primaryDomainUrl}
+                                </a>
+                  {')'}
+                            </span>
+              </li>
+            </Neos.Fusion:Loop>
+          </ul>
+        </div>
+      </div>
+    `
+}
+
+prototype(Neos.Neos:Module.Administration.SystemHealth.ViewContainer) < prototype(Neos.Fusion:Component) {
+    viewIdentifier = ''
+    prototypeName = ''
+    data = null
+    refreshInterval = 0
+    contentRepositoryId = ''
+
+    baseRefreshUrl = Neos.Fusion:ActionUri {
+        action = 'index'
+        format = 'htmx'
+    }
+
+    refreshUrl = ${this.baseRefreshUrl + '&viewIdentifier=' + this.viewIdentifier + '&contentRepository=' + this.contentRepositoryId}
+
+    renderer = afx`
+        <div
+            id={'system-health-view-' + props.viewIdentifier}
+            hx-get={props.refreshUrl}
+            hx-trigger={props.refreshInterval > 0 ? 'every ' + props.refreshInterval + 's' : 'none'}
+            hx-swap="innerHTML"
+            hx-select={'#system-health-content-' + props.viewIdentifier}
+            hx-target={'#system-health-content-' + props.viewIdentifier}
+        >
+            <div id={'system-health-content-' + props.viewIdentifier}>
+                <Neos.Fusion:Renderer type={props.prototypeName} element.data={props.data} />
+                <Neos.Neos:Module.Administration.SystemHealth.RefreshBadge
+                    refreshInterval={props.refreshInterval}
+                    viewIdentifier={props.viewIdentifier}
+                    contentRepositoryId={props.contentRepositoryId}
+                    timestamp={props.data.timestamp}
+                />
+            </div>
+        </div>
+    `
+}
+
+prototype(Neos.Neos:Module.Administration.SystemHealth.RefreshBadge) < prototype(Neos.Fusion:Component) {
+    refreshInterval = 0
+    viewIdentifier = ''
+    contentRepositoryId = ''
+    timestamp = ''
+    minutes = ${Math.floor(this.refreshInterval / 60)}
+    seconds = ${this.refreshInterval % 60}
+    formattedInterval = ${this.minutes > 0 ? (this.minutes + 'min' + (this.seconds > 0 ? ' ' + this.seconds + 's' : '')) : (this.seconds + 's')}
+
+    baseRefreshUrl = Neos.Fusion:ActionUri {
+        action = 'index'
+        format = 'htmx'
+    }
+
+    refreshUrl = ${this.baseRefreshUrl + '&viewIdentifier=' + this.viewIdentifier + '&contentRepository=' + this.contentRepositoryId}
+
+    renderer = afx`
+        <div class="system-health-refresh-info">
+          <span class="system-health-refresh-status">
+            <span class={props.refreshInterval > 0 ? 'refresh-indicator' : 'refresh-indicator-disabled'}></span>
+            {(props.refreshInterval > 0 ? I18n.translate('Neos.Neos:Modules:systemhealth.autoRefresh') + ' (' + props.formattedInterval + ')' : I18n.translate('Neos.Neos:Modules:systemhealth.autoRefreshDisabled')) + ' | '}
+            {I18n.translate('Neos.Neos:Modules:systemhealth.lastUpdated')}:
+            <span>{props.timestamp}</span>
+          </span>
+          <button class="neos-button neos-button-primary system-health-refresh-button"
+                  type="button"
+                  data-view-id={props.viewIdentifier}
+                  hx-get={props.refreshUrl}
+                  hx-target={'#system-health-content-' + props.viewIdentifier}
+                  hx-select={'#system-health-content-' + props.viewIdentifier}
+                  hx-swap="innerHTML"
+                  title={I18n.translate('Neos.Neos:Modules:systemhealth.manualRefresh')}>
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
+    `
+}
